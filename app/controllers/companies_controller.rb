@@ -25,6 +25,7 @@ class CompaniesController < ApplicationController
   # POST /companies.json
   def create
     @company = Company.new(company_params)
+    company_technologies.each { |t| @company.technologies << Technology.find(t[1]) }
 
     respond_to do |format|
       if @company.save
@@ -70,5 +71,8 @@ class CompaniesController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def company_params
       params.require(:company).permit(:name, :logo, :description, :admin_edited)
+    end
+    def company_technologies
+      params.require(:company).permit(:technologies)
     end
 end
