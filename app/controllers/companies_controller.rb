@@ -43,6 +43,7 @@ class CompaniesController < ApplicationController
   def update
     respond_to do |format|
       if @company.update(company_params)
+        company_technologies.each { |t| @company.technologies << Technology.find(t[1]) if not @company.technologies.include? Technology.find(t[1]) }
         format.html { redirect_to @company, notice: 'Company was successfully updated.' }
         format.json { render :show, status: :ok, location: @company }
       else

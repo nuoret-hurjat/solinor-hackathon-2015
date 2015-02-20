@@ -31,7 +31,6 @@
       <%= f.label :technologies %>
       <%= f.select :technologies, options_from_collection_for_select(Technology.all, :id, :name) %>
     </div>
-
     <div class="actions">
       <%= f.submit %>
     </div>
