@@ -1,5 +1,8 @@
 source 'https://rubygems.org'
 
+gem 'domainatrix'
+gem 'mechanize'
+gem 'rest-client'
 gem 'bootstrap-sass'
 gem 'nokogiri'
 gem 'better_errors'
