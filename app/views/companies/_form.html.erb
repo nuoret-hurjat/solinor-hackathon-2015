@@ -32,6 +32,6 @@
       <%= f.select :technologies, options_from_collection_for_select(Technology.all, :id, :name) %>
     </div>
     <div class="actions">
-      <%= f.submit %>
+      <%= f.submit class:"btn btn-primary"%>
     </div>
 <% end %>

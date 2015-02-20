@@ -2,7 +2,7 @@
 
 <h1>Listing Companies</h1>
 
-<table class="table table-hover">
+<table class="table table-striped">
   <thead>
     <tr>
       <th>Name</th>
@@ -16,13 +16,14 @@
   <tbody>
     <% @companies.each do |company| %>
       <tr>
-        <td><%= company.name %></td>
+        <td><%= link_to company.name, company %></td>
         <td><%= company.logo %></td>
         <td><%= company.description %></td>
         <td><%= company.admin_edited %></td>
-        <td><%= link_to 'Show', company %></td>
+  <% if not current_user.nil? %>        
         <td><%= link_to 'Edit', edit_company_path(company) %></td>
         <td><%= link_to 'Destroy', company, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  <% end %>    
       </tr>
     <% end %>
   </tbody>
@@ -30,4 +31,6 @@
 
 <br>
 
-<%= link_to 'New Company', new_company_path %>
+<% if not current_user.nil? %>  
+  <%= link_to 'New Company', new_company_path %>
+<% end %>

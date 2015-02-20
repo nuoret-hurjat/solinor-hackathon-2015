@@ -33,7 +33,7 @@
   <div class="field">
     <%= f.label :technologies %>
     <%= f.select :id, options_from_collection_for_select(@technologies, :id, :name) %>
-    <%= f.submit %>
+    <%= f.submit class:"btn btn-primary" %>
   </div>
 <% end %>
 
