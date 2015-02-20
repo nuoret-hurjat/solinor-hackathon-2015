@@ -12,11 +12,12 @@ class ResponseBodyApi
   
   def self.get_logo_uri(uri)
     responsebody = ResponseBodyApi.response_body_from uri
-    body = responsebody.body
-    doc = Nokogiri::HTML(body)
-    images = doc.css("img")
-    images.map do |img|
-      img.attributes['src'].value
-    end
+    #body = responsebody.body
+    doc = Nokogiri::HTML(responsebody)
+    images = doc.xpath("//img")
+    #images.map do |img|
+    #  img.attributes['src'].value
+    #end
+    images
   end
 end
