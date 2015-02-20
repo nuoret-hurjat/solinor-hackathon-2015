@@ -1,15 +1,17 @@
 class CompaniesController < ApplicationController
   before_action :set_company, only: [:show, :edit, :update, :destroy]
+  before_action :set_companies_and_technologies, only: [:index, :show]
+
 
   # GET /companies
   # GET /companies.json
   def index
-    @companies = Company.all
   end
 
   # GET /companies/1
   # GET /companies/1.json
   def show
+    @technology = Technology.new
   end
 
   # GET /companies/new
@@ -73,7 +75,14 @@ class CompaniesController < ApplicationController
     def company_params
       params.require(:company).permit(:name, :logo, :description, :admin_edited)
     end
+
     def company_technologies
       params.require(:company).permit(:technologies)
     end
+
+    def set_companies_and_technologies
+      @technologies = Technology.all
+      @companies = Company.all
+    end
+
 end
