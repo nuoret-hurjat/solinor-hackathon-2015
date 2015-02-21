@@ -24,13 +24,20 @@ class GetImagesApi
   end
 
   def self.get_images_mechanize(url)
-    agent = Mechanize.new
-    doc = agent.get(url)
-    agent.get(doc.parser.at('img')['src'])
-    urli = Domainatrix.parse(url)
-    img = doc.images_with(:src => urli)
-    img = doc.images_with(:src => /logo/) if img.empty?
-    img.last.fetch
-
+    begin
+      return nil if url.nil?
+      agent = Mechanize.new
+      doc = agent.get(url)
+      parsed = doc.parser.at('img')['src']
+      return nil if parsed.nil?
+      agent.get(parsed)
+      urli = Domainatrix.parse(url)
+      img = doc.images_with(:src => urli)
+      img = doc.images_with(:src => /logo/) if img.empty?
+      img.first.fetch.uri.to_s
+    rescue
+      return
+    end
   end
+
 end
