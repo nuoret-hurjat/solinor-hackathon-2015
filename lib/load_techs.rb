@@ -9,7 +9,6 @@ class LoadTechs
     haku = read_json_techs(url)
     haku["apps"].each do |k|
       Technology.create name:k[0], url:k[1]["website"]
-      Thread.sleep(10)
     end
   end
 end

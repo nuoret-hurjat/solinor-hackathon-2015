@@ -1,6 +1,7 @@
 class FetchPages
   def self.get_url_from_file_and_crawl(file)
     IO.foreach(file) do |line|
+      begin
       rivi = line.gsub("\n", '').squeeze(' ')
       url = "http://#{rivi}"
       logo = GetImagesApi.get_images_mechanize(url)
@@ -15,6 +16,9 @@ class FetchPages
       techs.each do |t|
         tech = Technology.find_by name:t
         firma.technologies << tech unless firma.technologies.include?(tech)
+      end
+      rescue
+
       end
     end
   end
