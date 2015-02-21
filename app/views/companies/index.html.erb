@@ -17,7 +17,7 @@
     <% @companies.each do |company| %>
       <tr>
         <td><%= link_to company.name, company %></td>
-        <td><%= company.logo %></td>
+        <td><%= image_tag(company.logo) %></td>
         <td><%= company.description %></td>
         <td><%= company.admin_edited %></td>
   <% if not current_user.nil? %>        
