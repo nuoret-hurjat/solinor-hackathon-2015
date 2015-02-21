@@ -17,6 +17,7 @@ class ApplicationController < ActionController::Base
   end
   
   def self.search_by_companies(param)
+    param = param.downcase
     map = Hash[Company.all.map{|com| [com.name.downcase, com]}]
     result = []
     map.keys.each do |key|
@@ -26,6 +27,7 @@ class ApplicationController < ActionController::Base
   end
   
   def self.search_by_technologies(param)
+    param = param.downcase
     map = Hash[Technology.all.map{|tech| [tech.name.downcase, tech]}]
     result = []
     map.keys.each do |key|
