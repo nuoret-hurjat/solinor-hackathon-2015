@@ -1,0 +1,34 @@
+<p id="notice"><%= notice %></p>
+
+<div class="table-responsive col-md-6">
+  <h3>Most popular technologies</h3 >
+<table class="table table-striped table-condensed">
+  <tbody>
+    <% @top_tech[0,20].each do |technology| %>
+      <tr>
+        <td><img src="<%= technology.logo %>"></td>
+        <td><%= link_to technology.name, technology %></td>
+        <td><%= link_to technology.url, "http://#{technology.url}" %></td>
+        <td><%= technology.companies_count %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+</div>
+<div class="table-responsive col-md-6">
+  <table class="table table-striped table-condensed">
+    <tbody>
+    <% @top_tech[0,20].each do |technology| %>
+        <tr>
+          <td><img src="<%= technology.logo %>"></td>
+          <td><%= link_to technology.name, technology %></td>
+          <td><%= link_to technology.url, "http://#{technology.url}" %></td>
+          <td><%= technology.companies_count %></td>
+        </tr>
+    <% end %>
+    </tbody>
+  </table>
+</div>
+
+<br>
+
