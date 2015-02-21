@@ -20,5 +20,12 @@ class GetFromWiki
       return nil
     end
   end
+
+  def self.update_all
+    Company.all.each do |c|
+      c.description = GetFromWiki.get_from_wiki(c.name)
+      c.save
+    end
+  end
 end
 
