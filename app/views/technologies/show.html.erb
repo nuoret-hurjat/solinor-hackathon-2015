@@ -30,5 +30,28 @@
   <%= @technology.description %>
 </p>
 
+<br>
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Logo</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @technology.companies.each do |c| %>
+      <tr>
+        <td><%= link_to c.name, c %></td>
+        <td><img src="<%= c.logo %>" height="32px" width="32px"></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+
+
+<% if not current_user.nil? %>  
 <%= link_to 'Edit', edit_technology_path(@technology) %> |
+<% end %>
 <%= link_to 'Back', technologies_path %>

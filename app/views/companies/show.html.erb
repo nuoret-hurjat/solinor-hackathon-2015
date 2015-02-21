@@ -18,13 +18,30 @@
 
 <p>
   <strong>Technologies:</strong>
-<ul>
-  <% @company.technologies.each do |t| %>
-     <li><%= t.name %></li>
-  <% end %>
-</ul>
 </p>
 
+<p>
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Logo</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @company.technologies.each do |t| %>
+      <tr>
+        <td><%= link_to t.name, t %></td>
+        <td><img src="<%= t.logo %>" height="32px" width="32px"></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+</p>
+
+
+<% if not current_user.nil? %>  
   <%= form_for(@company) do |f| %>
     <%= f.text_field :description %>
     <%= f.submit 'Update description', :size => 80, class:"btn btn-primary btn-xs" %>
@@ -39,4 +56,5 @@
 <% end %>
 
 <%= link_to 'Edit', edit_company_path(@company) %> |
+<% end %>
 <%= link_to 'Back', companies_path %>
