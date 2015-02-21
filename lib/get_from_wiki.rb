@@ -24,8 +24,14 @@ class GetFromWiki
   def self.update_all
     Company.all.each do |c|
       c.description = GetFromWiki.get_from_wiki(c.name)
+      if c.description.nil?
+        c.description = "Mieleni minun tekevi, aivoni ajattelevi lähteäni laulamahan, saa'ani sanelemahan, sukuvirttä suoltamahan, lajivirttä laulamahan. Sanat suussani sulavat, puhe'et putoelevat, kielelleni kerkiävät, hampahilleni hajoovat.
+\n
+Veli kulta, veikkoseni, kaunis kasvinkumppalini! Lähe nyt kanssa laulamahan, saa kera sanelemahan yhtehen yhyttyämme, kahta'alta käytyämme! Harvoin yhtehen yhymme, saamme toinen toisihimme näillä raukoilla rajoilla, poloisilla Pohjan mailla."
+      end
       c.save
     end
   end
+
 end
 
