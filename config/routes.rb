@@ -3,7 +3,7 @@ Rails.application.routes.draw do
 
   resources :companies
 
-  root 'companies#index'
+  root 'root#index'
   
   get 'search', to:'search#index'
   post 'search', to:'search#search'

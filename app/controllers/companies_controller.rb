@@ -12,6 +12,7 @@ class CompaniesController < ApplicationController
   # GET /companies/1.json
   def show
     @technology = Technology.new
+
   end
 
   # GET /companies/new
