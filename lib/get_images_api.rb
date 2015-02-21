@@ -34,7 +34,7 @@ class GetImagesApi
       urli = Domainatrix.parse(url)
       img = doc.images_with(:src => urli)
       img = doc.images_with(:src => /logo/) if img.empty?
-      img.first.fetch
+      img.first.fetch.uri.to_s
     rescue
       return
     end
