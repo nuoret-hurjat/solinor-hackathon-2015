@@ -9,6 +9,7 @@
       <th>Logo</th>
       <th>Description</th>
       <th>Admin edited</th>
+      <th>Technologies</th>
       <th colspan="3"></th>
     </tr>
   </thead>
@@ -17,9 +18,25 @@
     <% @companies.each do |company| %>
       <tr>
         <td><%= link_to company.name, company %></td>
-        <td><%= image_tag(company.logo) %></td>
-        <td><%= company.description %></td>
+        <% unless company.logo == "tyhjä" %>
+          <td><%= image_tag(company.logo, :height => '32', :width => '32') %></td>
+        <% else %>
+          <td><%= image_tag('noav.png', :height => '32', :width => '32') %></td>
+        <% end %>
+
+        <!-- <td> <%= company.description %> </td>-->
         <td><%= company.admin_edited %></td>
+        <td>
+          <ul class="list-inline">
+            <% company.technologies.each do |tech| %>
+              <li>
+                <a href="<%= technology_path(tech) %>" target="_blank">
+                  <img src="<%= tech.logo %>">
+                </a>
+              </li>
+            <% end %>
+          </ul>
+        </td>
   <% if not current_user.nil? %>        
         <td><%= link_to 'Edit', edit_company_path(company) %></td>
         <td><%= link_to 'Destroy', company, method: :delete, data: { confirm: 'Are you sure?' } %></td>
