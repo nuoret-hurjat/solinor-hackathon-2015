@@ -3,11 +3,7 @@
 <p>
   <strong>Name:</strong>
   <%= @company.name %>
-</p>
-
-<p>
-  <strong>Logo:</strong>
-  <%= @company.logo %>
+  <%= image_tag(@company.logo, :height => '64', :width => '64', :align => 'left') %>
 </p>
 
 <p>
