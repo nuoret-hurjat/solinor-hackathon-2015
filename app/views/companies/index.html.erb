@@ -24,7 +24,7 @@
           <td><%= image_tag('noav.png', :height => '32', :width => '32') %></td>
         <% end %>
 
-        <td><button type="button" class="btn btn-info btn-sm" data-toggle="popover" title="Description of company" content="<%= company.description %>">Info</button></td>
+        <td><button type="button" class="btn btn-info btn-sm" data-toggle="popover" title="Description of company" data-animation="true" data-trigger="hover click" data-content="<%= company.description %>">Info</button></td>
         <td>
           <ul class="list-inline">
             <% company.technologies.each do |tech| %>
