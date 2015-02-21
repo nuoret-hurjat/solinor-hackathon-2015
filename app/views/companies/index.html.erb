@@ -1,5 +1,11 @@
-
 <h1>Listing Companies</h1>
+
+<h3>Filter by technology</h3>
+<div class="btn-group" role="group" aria-label="...">
+  <% ApplicationController.top_technologies(20).each do |tech| %>
+    <button type="button"><%= tech.name %></button>
+  <% end %>
+</div>
 
 <table class="table table-striped">
   <thead>
