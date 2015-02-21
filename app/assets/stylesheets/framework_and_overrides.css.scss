@@ -37,6 +37,7 @@ main {
   @extend .container;
   background-color: #eee;
   padding-bottom: 80px;
+  padding-top: 80px;
   width: 100%;
   margin-top: 51px; // accommodate the navbar
   }
@@ -53,4 +54,7 @@ html {
 .input-group {
   padding-top: 8px;
   padding-right: 8px;
+}
+th{
+    font-variant: small-caps;
 }
