@@ -1,7 +1,8 @@
 <p id="notice"><%= notice %></p>
+<script src="http://code.jquery.com/qunit/qunit-1.11.0.js"></script>
 
 <div class="table-responsive col-md-6">
-  <h3>Most popular technologies</h3 >
+  <h3>Most popular technologies</h3>
 <table class="table table-striped table-condensed">
   <tbody>
     <% @top_tech[0,20].each do |technology| %>
@@ -16,19 +17,149 @@
 </table>
 </div>
 <div class="table-responsive col-md-6">
-  <table class="table table-striped table-condensed">
-    <tbody>
-    <% @top_tech[0,20].each do |technology| %>
-        <tr>
-          <td><img src="<%= technology.logo %>"></td>
-          <td><%= link_to technology.name, technology %></td>
-          <td><%= link_to technology.url, "http://#{technology.url}" %></td>
-          <td><%= technology.companies_count %></td>
-        </tr>
-    <% end %>
-    </tbody>
-  </table>
+  <div class="simple_venn"></div>
 </div>
 
 <br>
 
+<script src="http://d3js.org/d3.v3.min.js"></script>
+<script src="venn.js"></script>
+<script>
+    var sets=[{"label": "<%= @top_tech[0].name %>", "size": <%= @top_tech[0].companies.count %>},
+                {"label": "<%= @top_tech[1].name %>", "size": <%= @top_tech[1].companies.count %>},
+                {"label": "<%= @top_tech[2].name %>", "size": <%= @top_tech[2].companies.count %>},
+                {"label": "<%= @top_tech[3].name %>", "size": <%= @top_tech[3].companies.count %>},
+                {"label": "<%= @top_tech[4].name %>", "size": <%= @top_tech[4].companies.count %>},
+                {"label": "<%= @top_tech[5].name %>", "size": <%= @top_tech[5].companies.count %>}],
+            overlaps=[{"sets": [0, 1], "size": <%= (@top_tech[0].companies & @top_tech[1].companies).count %>},
+                {"sets": [0, 2], "size": <%= (@top_tech[0].companies & @top_tech[2].companies).count %>},
+                {"sets": [0, 3], "size": <%= (@top_tech[0].companies & @top_tech[3].companies).count %>},
+                {"sets": [0, 4], "size": <%= (@top_tech[0].companies & @top_tech[4].companies).count %>},
+                {"sets": [0, 5], "size": <%= (@top_tech[0].companies & @top_tech[5].companies).count %>},
+                {"sets": [1, 2], "size": <%= (@top_tech[1].companies & @top_tech[2].companies).count %>},
+                {"sets": [1, 3], "size": <%= (@top_tech[1].companies & @top_tech[3].companies).count %>},
+                {"sets": [1, 4], "size": <%= (@top_tech[1].companies & @top_tech[4].companies).count %>},
+                {"sets": [1, 5], "size": <%= (@top_tech[1].companies & @top_tech[5].companies).count %>},
+                {"sets": [2, 3], "size": <%= (@top_tech[2].companies & @top_tech[3].companies).count %>},
+                {"sets": [2, 4], "size": <%= (@top_tech[2].companies & @top_tech[4].companies).count %>},
+                {"sets": [2, 5], "size": <%= (@top_tech[2].companies & @top_tech[5].companies).count %>},
+                {"sets": [3, 4], "size": <%= (@top_tech[3].companies & @top_tech[4].companies).count %>},
+                {"sets": [3, 5], "size": <%= (@top_tech[3].companies & @top_tech[5].companies).count %>},
+                {"sets": [4, 5], "size": <%= (@top_tech[4].companies & @top_tech[5].companies).count %>},
+                {"sets": [0, 1, 2], "size": <%= (@top_tech[0].companies & @top_tech[1].companies & @top_tech[2].companies).count %>},
+                {"sets": [0, 1, 3], "size": <%= (@top_tech[0].companies & @top_tech[1].companies & @top_tech[3].companies).count %>},
+                {"sets": [0, 1, 4], "size": <%= (@top_tech[0].companies & @top_tech[1].companies & @top_tech[4].companies).count %>},
+                {"sets": [0, 1, 5], "size": <%= (@top_tech[0].companies & @top_tech[1].companies & @top_tech[5].companies).count %>},
+                {"sets": [0, 2, 3], "size": <%= (@top_tech[0].companies & @top_tech[2].companies & @top_tech[3].companies).count %>},
+                {"sets": [0, 2, 4], "size": <%= (@top_tech[0].companies & @top_tech[2].companies & @top_tech[4].companies).count %>},
+                {"sets": [0, 2, 5], "size": <%= (@top_tech[0].companies & @top_tech[2].companies & @top_tech[5].companies).count %>},
+                {"sets": [0, 3, 4], "size": <%= (@top_tech[0].companies & @top_tech[3].companies & @top_tech[4].companies).count %>},
+                {"sets": [0, 3, 5], "size": <%= (@top_tech[0].companies & @top_tech[3].companies & @top_tech[5].companies).count %>},
+                {"sets": [0, 4, 5], "size": <%= (@top_tech[0].companies & @top_tech[4].companies & @top_tech[5].companies).count %>},
+                {"sets": [1, 2, 3], "size": <%= (@top_tech[1].companies & @top_tech[2].companies & @top_tech[3].companies).count %>},
+                {"sets": [1, 2, 4], "size": <%= (@top_tech[1].companies & @top_tech[2].companies & @top_tech[4].companies).count %>},
+                {"sets": [1, 2, 5], "size": <%= (@top_tech[1].companies & @top_tech[2].companies & @top_tech[5].companies).count %>},
+                {"sets": [1, 3, 4], "size": <%= (@top_tech[1].companies & @top_tech[3].companies & @top_tech[4].companies).count %>},
+                {"sets": [1, 3, 5], "size": <%= (@top_tech[1].companies & @top_tech[3].companies & @top_tech[5].companies).count %>},
+                {"sets": [1, 4, 5], "size": <%= (@top_tech[1].companies & @top_tech[4].companies & @top_tech[5].companies).count %>},
+                {"sets": [2, 3, 4], "size": <%= (@top_tech[2].companies & @top_tech[3].companies & @top_tech[4].companies).count %>},
+                {"sets": [2, 3, 5], "size": <%= (@top_tech[3].companies & @top_tech[3].companies & @top_tech[5].companies).count %>},
+                {"sets": [2, 4, 5], "size": <%= (@top_tech[4].companies & @top_tech[4].companies & @top_tech[5].companies).count %>},
+                {"sets": [3, 4, 5], "size": <%= (@top_tech[4].companies & @top_tech[4].companies & @top_tech[5].companies).count %>},
+                {"sets": [0, 1, 2, 3], "size": <%= (@top_tech[0].companies & @top_tech[1].companies & @top_tech[2].companies & @top_tech[3].companies).count %>},
+                {"sets": [0, 1, 2, 4], "size": <%= (@top_tech[0].companies & @top_tech[1].companies & @top_tech[2].companies & @top_tech[4].companies).count %>},
+                {"sets": [0, 1, 2, 5], "size": <%= (@top_tech[0].companies & @top_tech[1].companies & @top_tech[2].companies & @top_tech[5].companies).count %>},
+                {"sets": [0, 1, 3, 4], "size": <%= (@top_tech[0].companies & @top_tech[1].companies & @top_tech[3].companies & @top_tech[4].companies).count %>},
+                {"sets": [0, 1, 3, 5], "size": <%= (@top_tech[0].companies & @top_tech[1].companies & @top_tech[3].companies & @top_tech[5].companies).count %>},
+                {"sets": [0, 1, 4, 5], "size": <%= (@top_tech[0].companies & @top_tech[1].companies & @top_tech[4].companies & @top_tech[5].companies).count %>},
+                {"sets": [0, 2, 3, 4], "size": <%= (@top_tech[0].companies & @top_tech[2].companies & @top_tech[3].companies & @top_tech[4].companies).count %>},
+                {"sets": [0, 2, 3, 5], "size": <%= (@top_tech[0].companies & @top_tech[2].companies & @top_tech[3].companies & @top_tech[5].companies).count %>},
+                {"sets": [0, 2, 4, 5], "size": <%= (@top_tech[0].companies & @top_tech[2].companies & @top_tech[4].companies & @top_tech[5].companies).count %>},
+                {"sets": [0, 3, 4, 5], "size": <%= (@top_tech[0].companies & @top_tech[3].companies & @top_tech[4].companies & @top_tech[5].companies).count %>},
+                {"sets": [1, 2, 3, 4], "size": <%= (@top_tech[1].companies & @top_tech[2].companies & @top_tech[3].companies & @top_tech[4].companies).count %>},
+                {"sets": [1, 2, 3, 5], "size": <%= (@top_tech[1].companies & @top_tech[2].companies & @top_tech[3].companies & @top_tech[5].companies).count %>},
+                {"sets": [1, 2, 4, 5], "size": <%= (@top_tech[1].companies & @top_tech[2].companies & @top_tech[4].companies & @top_tech[5].companies).count %>},
+                {"sets": [1, 3, 4, 5], "size": <%= (@top_tech[1].companies & @top_tech[3].companies & @top_tech[4].companies & @top_tech[5].companies).count %>},
+                {"sets": [2, 3, 4, 5], "size": <%= (@top_tech[2].companies & @top_tech[3].companies & @top_tech[4].companies & @top_tech[5].companies).count %>}]
+
+    sets = venn.venn(sets, overlaps);
+    var diagram = venn.drawD3Diagram(d3.select(".simple_venn"), sets, 500, 500);
+    var tooltip = d3.select("body").append("div")
+            .attr("class", "venntooltip");
+    d3.selection.prototype.moveParentToFront = function() {
+        return this.each(function(){
+            this.parentNode.parentNode.appendChild(this.parentNode);
+        });
+    };
+    // hover on all the circles
+    diagram.circles
+            .style("stroke-opacity", 0)
+            .style("stroke", "white")
+            .style("stroke-width", "2");
+    diagram.nodes
+            .on("mousemove", function() {
+                tooltip.style("left", (d3.event.pageX) + "px")
+                        .style("top", (d3.event.pageY - 28) + "px");
+            })
+            .on("mouseover", function(d, i) {
+                var selection = d3.select(this).select("circle");
+                selection.moveParentToFront()
+                        .transition()
+                        .style("fill-opacity", .5)
+                        .style("stroke-opacity", 1);
+                tooltip.transition().style("opacity", .9);
+                tooltip.text(d.size + " users");
+            })
+            .on("mouseout", function(d, i) {
+                d3.select(this).select("circle").transition()
+                        .style("fill-opacity", .3)
+                        .style("stroke-opacity", 0);
+                tooltip.transition().style("opacity", 0);
+            });
+
+    // draw a path around each intersection area, add hover there as well
+    diagram.svg.selectAll("path")
+            .data(overlaps)
+            .enter()
+            .append("path")
+            .attr("d", function(d) {
+                return venn.intersectionAreaPath(d.sets.map(function(j) { return sets[j]; }));
+            })
+            .style("fill-opacity","0")
+            .style("fill", "black")
+            .style("stroke-opacity", 0)
+            .style("stroke", "white")
+            .style("stroke-width", "2")
+            .on("mouseover", function(d, i) {
+                d3.select(this).transition()
+                        .style("fill-opacity", .1)
+                        .style("stroke-opacity", 1);
+                tooltip.transition().style("opacity", .9);
+                tooltip.text(d.size + " websites");
+            })
+            .on("mouseout", function(d, i) {
+                d3.select(this).transition()
+                        .style("fill-opacity", 0)
+                        .style("stroke-opacity", 0);
+                tooltip.transition().style("opacity", 0);
+            })
+            .on("mousemove", function() {
+                tooltip.style("left", (d3.event.pageX) + "px")
+                        .style("top", (d3.event.pageY - 28) + "px");
+            })
+
+</script>
+<style>
+    .venntooltip {
+        position: absolute;
+        text-align: center;
+        width: 128px;
+        height: 16px;
+        background: #123;
+        color: #ddd;
+        padding: 0px;
+        border: 0px;
+        border-radius: 8px;
+        opacity: 0;
+    }
+</style>
