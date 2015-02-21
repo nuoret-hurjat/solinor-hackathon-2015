@@ -1,5 +1,6 @@
 source 'https://rubygems.org'
 
+gem 'wappalyzer_rb', '~> 0.0.6'
 gem 'domainatrix'
 gem 'mechanize'
 gem 'rest-client'
