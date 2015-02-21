@@ -29,11 +29,16 @@
 </ul>
 </p>
 
+  <%= form_for(@company) do |f| %>
+    <%= f.text_field :description %>
+    <%= f.submit 'Update description', :size => 80, class:"btn btn-primary btn-xs" %>
+  <% end %>
+
 <%= form_for(@technology) do |f| %>
   <div class="field">
     <%= f.label :technologies %>
     <%= f.select :id, options_from_collection_for_select(@technologies, :id, :name) %>
-    <%= f.submit class:"btn btn-primary" %>
+    <%= f.submit class:"btn btn-primary btn-xs" %>
   </div>
 <% end %>
 
