@@ -35,5 +35,9 @@ class ApplicationController < ActionController::Base
     end
     result
   end
+  
+  def self.top_technologies(n)
+    Technology.all.sort_by{ |t| t.companies.count }.reverse.take(n)
+  end
 
 end
