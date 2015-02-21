@@ -17,7 +17,11 @@
     <% @companies.each do |company| %>
       <tr>
         <td><%= link_to company.name, company %></td>
-        <td><%= image_tag(company.logo) %></td>
+        <% unless company.logo == "tyhjä" %>
+          <td><%= image_tag(company.logo, :height => '32', :width => '32') %></td>
+        <% else %>
+          <td><%= image_tag('noav.png', :height => '32', :width => '32') %></td>
+        <% end %>
         <td><%= company.description %></td>
         <td><%= company.admin_edited %></td>
   <% if not current_user.nil? %>        
