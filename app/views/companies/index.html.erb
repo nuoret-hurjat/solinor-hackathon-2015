@@ -22,7 +22,8 @@
         <% else %>
           <td><%= image_tag('noav.png', :height => '32', :width => '32') %></td>
         <% end %>
-        <td><%= company.description %></td>
+
+        <!-- <td> <%= company.description %> </td>-->
         <td><%= company.admin_edited %></td>
   <% if not current_user.nil? %>        
         <td><%= link_to 'Edit', edit_company_path(company) %></td>
