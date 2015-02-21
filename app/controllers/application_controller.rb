@@ -9,5 +9,29 @@ class ApplicationController < ActionController::Base
     return nil if session[:user_id].nil?
     User.find(session[:user_id])
   end
-    
+  
+  def search_by_companies
+    map = Company.all.map do |company|
+      {tolower(company.name) => company}
+    end
+  end
+  
+  def self.search_by_companies(param)
+    map = Hash[Company.all.map{|com| [com.name.downcase, com]}]
+    result = []
+    map.keys.each do |key|
+      result << map[key] if key.include? param
+    end
+    result
+  end
+  
+  def self.search_by_technologies(param)
+    map = Hash[Technology.all.map{|tech| [tech.name.downcase, tech]}]
+    result = []
+    map.keys.each do |key|
+      result << map[key] if key.include? param
+    end
+    result
+  end
+
 end
