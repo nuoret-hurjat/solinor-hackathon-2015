@@ -2,7 +2,7 @@ class FetchPages
   def self.get_url_from_file_and_crawl(file)
     IO.foreach(file) do |line|
       begin
-        status = Timeout::timeout(2) {
+        status = Timeout::timeout(5) {
 
           rivi = line.gsub("\n", '').squeeze(' ')
           url = URI::encode("http://#{rivi}")
